@@ -56,4 +56,74 @@
     }
   });
 
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    if (menu.classList.contains('hidden')) {
+      menu.classList.remove('hidden');
+      setTimeout(() => {
+        menu.classList.remove('scale-95', 'opacity-0');
+        menu.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    } else {
+      menu.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        menu.classList.add('hidden');
+        menu.classList.remove('scale-100', 'opacity-100');
+      }, 300);
+    }
+  }
+
+ document.querySelectorAll(".loadMoreBtn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    // cari container terdekat
+    const container = btn.closest(".card-container");
+    // cari card hidden di container ini
+    const hiddenCards = container.querySelectorAll(".hidden");
+
+    hiddenCards.forEach(card => {
+      card.classList.remove("hidden"); // tampilkan
+    });
+
+    // sembunyikan tombol
+    btn.style.display = "none";
+  });
+});
+
+  document.querySelectorAll(".slider-container").forEach((container) => {
+    const slider = container.querySelector(".slider");
+    const slides = slider.children;
+    const dots = container.querySelectorAll(".dot");
+    const prevBtn = container.querySelector(".prevBtn");
+    const nextBtn = container.querySelector(".nextBtn");
+    let index = 0;
+
+    function updateSlider() {
+      slider.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((dot, i) => {
+        dot.style.backgroundColor = i === index ? "#223DFC" : "#D1D5DB";
+      });
+    }
+
+    prevBtn.addEventListener("click", () => {
+      index = (index - 1 + slides.length) % slides.length;
+      updateSlider();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      index = (index + 1) % slides.length;
+      updateSlider();
+    });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => {
+        index = i;
+        updateSlider();
+      });
+    });
+
+    updateSlider();
+  });
+
+
   
+
